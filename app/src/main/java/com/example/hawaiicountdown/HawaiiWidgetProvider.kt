@@ -1,4 +1,3 @@
-
 package com.example.hawaiicountdown
 
 import android.app.AlarmManager
@@ -8,6 +7,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
+import android.widget.Toast
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
@@ -21,12 +21,33 @@ class HawaiiWidgetProvider : AppWidgetProvider() {
         scheduleNextUpdate(context)
     }
 
+    // Handle our custom tap action
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+        if (intent.action == "com.example.hawaiicountdown.WIDGET_TAP") {
+            Toast.makeText(context, "Hawaii!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun updateWidget(ctx: Context, mgr: AppWidgetManager, id: Int) {
         val today = LocalDate.now(ZoneId.systemDefault())
         val daysLeft = ChronoUnit.DAYS.between(today, targetDate).coerceAtLeast(0)
 
         val views = RemoteViews(ctx.packageName, R.layout.widget_hawaii)
         views.setTextViewText(R.id.daysNumber, daysLeft.toString())
+
+        // Create the tap PendingIntent
+        val tapIntent = Intent(ctx, HawaiiWidgetProvider::class.java).apply {
+            action = "com.example.hawaiicountdown.WIDGET_TAP"
+        }
+        val pendingTapIntent = PendingIntent.getBroadcast(
+            ctx,
+            1, // Use a different request code than the update intent
+            tapIntent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        views.setOnClickPendingIntent(R.id.widgetRoot, pendingTapIntent)
+
         mgr.updateAppWidget(id, views)
     }
 
