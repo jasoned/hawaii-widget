@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="#80000000">
+        android:background="@drawable/gradient_scrim">
 
         <TextView
             android:id="@+id/daysNumber"
@@ -24,7 +24,11 @@
             android:text="100"
             android:textColor="#FFFFFF"
             android:textSize="48sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="3" />
 
         <TextView
             android:id="@+id/caption"
@@ -33,6 +37,10 @@
             android:text="Days Until Hawaii!"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
-            android:paddingTop="4dp" />
+            android:paddingTop="4dp"
+            android:shadowColor="#000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2" />
     </LinearLayout>
 </FrameLayout>
