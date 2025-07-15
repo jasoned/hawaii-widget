@@ -6,6 +6,9 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.os.Build
 import android.widget.RemoteViews
 import android.widget.Toast
 import java.time.LocalDate
@@ -21,7 +24,6 @@ class HawaiiWidgetProvider : AppWidgetProvider() {
         scheduleNextUpdate(context)
     }
 
-    // Handle our custom tap action
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         if (intent.action == "com.example.hawaiicountdown.WIDGET_TAP") {
@@ -42,11 +44,19 @@ class HawaiiWidgetProvider : AppWidgetProvider() {
         }
         val pendingTapIntent = PendingIntent.getBroadcast(
             ctx,
-            1, // Use a different request code than the update intent
+            1,
             tapIntent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         views.setOnClickPendingIntent(R.id.widgetRoot, pendingTapIntent)
+
+        // Apply modern UI effects only on Android 12 (API 31) and newer
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // Add the blur RenderEffect to the background image
+            views.setRenderEffect(R.id.bgImage, RenderEffect.createBlurEffect(8f, 8f, Shader.TileMode.MIRROR))
+            // Set the caption text color to the system's dynamic accent color
+            views.setTextColor(R.id.caption, ctx.getColor(android.R.color.system_accent1_100))
+        }
 
         mgr.updateAppWidget(id, views)
     }
