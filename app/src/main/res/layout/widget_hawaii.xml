@@ -1,48 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widgetRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="0dp">
+    android:background="@drawable/widget_background"
+    android:clipToOutline="true">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/bgImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/napali_bg" />
 
-        <ImageView
-            android:id="@+id/bgImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/napali_bg" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/overlay_fade"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/overlay_fade"
-            android:gravity="center"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/daysNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:textColor="#FFFFFF"
+            android:textSize="56sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/daysNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="100"
-                android:textColor="#FFFFFF"
-                android:textSize="56sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:letterSpacing="0.02"
-                android:paddingBottom="8dp"
-                android:text="Days Until Hawaii!"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-        </LinearLayout>
-    </FrameLayout>
-</androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.02"
+            android:paddingBottom="8dp"
+            android:text="Days Until Hawaii!"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+    </LinearLayout>
+</FrameLayout>
